@@ -1,5 +1,5 @@
 *** Settings ***
-Resource     ../../resources/common/Browser.resource
+Resource     ../../resources/common/browser.resource
 Resource     ../../pages/HomePage.resource
 
 Suite Setup      Open Application
