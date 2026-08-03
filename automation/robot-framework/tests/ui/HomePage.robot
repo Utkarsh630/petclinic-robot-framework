@@ -10,5 +10,3 @@ Verify Home Page Opens Successfully
     [Tags]    smoke    ui
     [Documentation]    Verify Home Page Opens Successfully
     Verify Home Page Is Loaded    
-
-    Create New Owner 
