@@ -16,36 +16,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Verify Docker
-        run: |
-          docker --version
-          docker compose version
+    - name: Verify Docker
+      run: |
+        docker --version
+        docker compose version
 
-      - name: Build Docker Images
-        working-directory: docker
-        run: docker compose build
+    - name: Show Docker Compose Configuration
+      working-directory: docker
+      run: |
+        docker compose config
 
-      - name: Start Infrastructure
-        working-directory: docker
-        run: docker compose --profile infra up -d
+    - name: Build Docker Images
+      working-directory: docker
+      run: docker compose build
 
-      - name: Wait for Services
-        run: sleep 40
+    - name: Start Infrastructure
+      working-directory: docker
+      run: |
+        docker compose --profile infra up -d
 
-      - name: Run Robot Tests
-        working-directory: docker
-        run: |
-          docker compose run --rm robot \
-            --outputdir reports \
-            tests/ui/HomePage.robot
+    - name: Wait for Services
+      run: sleep 60
 
-      - name: Upload Robot Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: robot-framework-reports
-          path: |
-            automation/robot-framework/reports/
+    # 👇 Add this debug step
+    - name: Show Running Containers
+      working-directory: docker
+      run: |
+        docker compose ps
+
+    # 👇 Replace your existing "Run Robot Tests" step with this
+    - name: Run Robot Tests
+      working-directory: docker
+      run: |
+        docker compose \
+          --profile infra \
+          --profile test \
+          run --rm robot \
+          --outputdir reports \
+          tests/ui/HomePage.robot
+
+    - name: Upload Robot Reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: robot-framework-reports
+        path: automation/robot-framework/reports/
