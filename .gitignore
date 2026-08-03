@@ -1,0 +1,47 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Robot Framework Reports
+output.xml
+log.html
+report.html
+
+reports/
+logs/
+screenshots/
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+
+# Environment
+.env
+
+# Maven
+**/target/
+
+# Gradle
+**/build/
+
+# Docker
+*.tar
+
+# OS
+Thumbs.db

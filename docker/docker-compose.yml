@@ -1,0 +1,73 @@
+services:
+
+  robot:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.robot
+
+    container_name: robot-framework
+
+    depends_on:
+      - selenium
+      - petclinic
+
+    working_dir: /robot
+
+    volumes:
+      - ../automation/robot-framework:/robot
+
+    environment:
+      BASE_URL: http://petclinic:8080
+      SELENIUM_REMOTE_URL: http://selenium:4444
+
+  postgres:
+    image: postgres:16
+    container_name: petclinic-postgres
+
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_DB: petclinic
+      POSTGRES_USER: petclinic
+      POSTGRES_PASSWORD: petclinic
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+  petclinic:
+    build:
+      context: ../application/spring-petclinic
+
+    container_name: spring-petclinic
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/petclinic
+      POSTGRES_USER: petclinic
+      POSTGRES_PASS: petclinic
+
+    depends_on:
+      - postgres
+
+    restart: unless-stopped
+
+  selenium:
+    image: selenium/standalone-chromium:4.33.0
+
+    container_name: selenium-grid
+
+    ports:
+      - "4444:4444"
+
+    shm_size: "2gb"
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
