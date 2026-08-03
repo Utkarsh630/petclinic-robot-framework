@@ -1,6 +1,7 @@
 services:
 
   robot:
+    profiles: ["test"]
     build:
       context: ..
       dockerfile: docker/Dockerfile.robot
@@ -21,6 +22,7 @@ services:
       SELENIUM_REMOTE_URL: http://selenium:4444
 
   postgres:
+    profiles: ["infra"]
     image: postgres:16
     container_name: petclinic-postgres
 
@@ -38,6 +40,7 @@ services:
     restart: unless-stopped
 
   petclinic:
+    profiles: ["infra"]
     build:
       context: ../application/spring-petclinic
 
@@ -58,6 +61,7 @@ services:
     restart: unless-stopped
 
   selenium:
+    profiles: ["infra"]
     image: selenium/standalone-chromium:4.33.0
 
     container_name: selenium-grid
