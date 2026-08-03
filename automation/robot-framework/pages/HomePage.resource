@@ -1,8 +1,10 @@
 *** Settings ***
 Resource    BasePage.resource
+Variables    ../locators/HomePage.py
 
 *** Variables ***
 ${HOME_TITLE}=    PetClinic :: a Spring Framework demonstration
+
 
 *** Keywords ***
 Verify Home Page Is Loaded
@@ -12,3 +14,7 @@ Verify Home Page Is Loaded
     Should Be Equal
     ...    ${title}
     ...    ${HOME_TITLE}
+
+Navigate To Find Owners Page
+
+    Click    ${FIND_OWNERS_LINK}

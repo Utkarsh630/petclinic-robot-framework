@@ -1,0 +1,1 @@
+ALERT_MSG = "id=success-message"

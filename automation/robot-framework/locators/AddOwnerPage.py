@@ -1,0 +1,6 @@
+FIRST_NAME_INPUT = "id=firstName"
+LAST_NAME_INPUT = "id=lastName"
+ADDRESS_INPUT = "id=address"
+CITY_INPUT = "id=city"
+TELEPHONE_INPUT = "id=telephone"
+ADD_OWNER_BUTTON = "xpath=//button[text()='Add Owner']"
