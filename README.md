@@ -157,7 +157,7 @@ docker compose run --rm robot --outputdir reports tests/ui
 
 # 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License
 
 ---
 
